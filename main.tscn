@@ -1,10 +1,11 @@
 [gd_scene format=4 uid="uid://cjr8ccymuthyh"]
 
+[ext_resource type="Script" uid="uid://30s0nq01aab4" path="res://main.gd" id="1_2cqfq"]
 [ext_resource type="PackedScene" uid="uid://swqd4sjqmjst" path="res://buildingassets/floor.glb" id="1_h2yge"]
 [ext_resource type="Script" uid="uid://dohywafse4bmu" path="res://player.gd" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://t7w611vt5nsu" path="res://character.glb" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://cu50rkt6ksmdp" path="res://buildingassets/wall.glb" id="2_1bvp3"]
-[ext_resource type="PackedScene" uid="uid://brs1xuk8kpvl3" path="res://buildingassets/door-rotate-square-a.glb" id="2_272bh"]
+[ext_resource type="PackedScene" uid="uid://cghv5x8t4lv4y" path="res://interactable_door.tscn" id="2_vivmo"]
 [ext_resource type="PackedScene" uid="uid://coxnc2304j2oj" path="res://buildingassets/wall-window-round.glb" id="3_5vw27"]
 [ext_resource type="PackedScene" uid="uid://6uegxh124bb4" path="res://buildingassets/wall-doorway-square.glb" id="4_kek77"]
 [ext_resource type="Texture2D" uid="uid://bspujrjefp1hr" path="res://buildingassets/Textures/colormap.png" id="5_vivmo"]
@@ -128,18 +129,18 @@ albedo_texture = ExtResource("9_w48qg")
 uv1_scale = Vector3(300, 300, 300)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nfrx5"]
+radius = 0.4
 height = 1.9
 
 [node name="Main" type="Node3D" unique_id=1695030004]
+script = ExtResource("1_2cqfq")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=517100948]
 transform = Transform3D(0.8820786, 0.17272899, -0.43829456, 0.35052225, 0.3809645, 0.8555701, 0.31475645, -0.908312, 0.2754952, 0, 15, 0)
-visible = false
 light_energy = 2.0
 
 [node name="DirectionalLight3D2" type="DirectionalLight3D" parent="." unique_id=450005102]
 transform = Transform3D(0.9207393, 0.21610877, 0.32486334, -0.26036727, -0.27980494, 0.92407674, 0.2905995, -0.9354176, -0.2013597, 0, 15, 0)
-visible = false
 light_energy = 2.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1600159531]
@@ -484,20 +485,30 @@ shape = SubResource("ConcavePolygonShape3D_h2yge")
 
 [node name="HouseWalls" type="Node3D" parent="." unique_id=2111189056]
 
-[node name="main door" parent="HouseWalls" unique_id=131401983 instance=ExtResource("2_272bh")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.44744903, 0, 3)
+[node name="door1" parent="HouseWalls" unique_id=131401983 groups=["ExitDoor"] instance=ExtResource("2_vivmo")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0.45507884, 0, 3)
 
-[node name="main door2" parent="HouseWalls" unique_id=1821806286 instance=ExtResource("2_272bh")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.44744903, 0, -5)
+[node name="door-rotate-square-a" parent="HouseWalls/door1" index="0" unique_id=1894792230 groups=["ExitDoor"]]
 
-[node name="main door5" parent="HouseWalls" unique_id=2030183243 instance=ExtResource("2_272bh")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.552551, 0, -7)
+[node name="door" parent="HouseWalls/door1/door-rotate-square-a" index="0" unique_id=1612679170 groups=["ExitDoor"]]
 
-[node name="main door3" parent="HouseWalls" unique_id=1121847979 instance=ExtResource("2_272bh")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -5.447449, 0, -5)
+[node name="handle" parent="HouseWalls/door1/door-rotate-square-a/door" index="0" unique_id=419513517 groups=["ExitDoor"]]
 
-[node name="main door4" parent="HouseWalls" unique_id=316409377 instance=ExtResource("2_272bh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9935613, 0, -6.4623566)
+[node name="StaticBody3D" parent="HouseWalls/door1/door-rotate-square-a/door" index="1" unique_id=1847119764 groups=["ExitDoor"]]
+
+[node name="CollisionShape3D" parent="HouseWalls/door1/door-rotate-square-a/door/StaticBody3D" index="0" unique_id=1270855003 groups=["ExitDoor"]]
+
+[node name="door2" parent="HouseWalls" unique_id=1798886668 instance=ExtResource("2_vivmo")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0.45507884, 0, -5)
+
+[node name="door3" parent="HouseWalls" unique_id=301121773 instance=ExtResource("2_vivmo")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -4.544921, 0, -5)
+
+[node name="door4" parent="HouseWalls" unique_id=989133401 instance=ExtResource("2_vivmo")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2.455079, 0, -7)
+
+[node name="door5" parent="HouseWalls" unique_id=1851054460 instance=ExtResource("2_vivmo")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -3.0331693, 0, -5.5462003)
 
 [node name="wall-window-round2" parent="HouseWalls" unique_id=1134807664 instance=ExtResource("3_5vw27")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2, 0, 3)
@@ -859,7 +870,6 @@ shape = SubResource("ConcavePolygonShape3D_w48qg")
 
 [node name="GreenBase" type="CSGBox3D" parent="Outdoor" unique_id=1288345194]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
-visible = false
 use_collision = true
 size = Vector3(100, 0.2, 100)
 material = SubResource("StandardMaterial3D_nfrx5")
@@ -1617,6 +1627,9 @@ shape = SubResource("CapsuleShape3D_nfrx5")
 [node name="Camera3D" type="Camera3D" parent="Player" unique_id=453772127]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, -0.263)
 
+[node name="RayCast3D" type="RayCast3D" parent="Player/Camera3D" unique_id=1595479557]
+target_position = Vector3(0, -1, -2)
+
 [node name="Root Scene" parent="Player" unique_id=450358301 instance=ExtResource("2_0xm2m")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, -1, 0)
 
@@ -1698,6 +1711,18 @@ transform = Transform3D(0.99323684, 0.00803533, -0.11560086, 0.114972785, 0.0560
 [node name="PT_R" parent="Player/Root Scene/RootNode/CharacterArmature/Skeleton3D" index="16" unique_id=2086582501]
 transform = Transform3D(1, -1.2749048e-09, -6.794929e-05, -6.7948306e-05, 0.0053473976, -0.99998564, 3.646268e-07, 0.99998564, 0.0053473976, -0.00018165624, -0.007312292, 0.004232642)
 
+[node name="FlightTimer" type="Timer" parent="." unique_id=2077387377]
+wait_time = 120.0
+one_shot = true
+autostart = true
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=731430340]
+
+[node name="TimeLabel" type="Label" parent="UI" unique_id=1792527319]
+offset_right = 42.0
+offset_bottom = 23.0
+text = "02:00"
+
 [editable path="HouseFloors/tile1"]
 [editable path="HouseFloors/tile10"]
 [editable path="HouseFloors/tile11"]
@@ -1740,11 +1765,11 @@ transform = Transform3D(1, -1.2749048e-09, -6.794929e-05, -6.7948306e-05, 0.0053
 [editable path="HouseFloors/tile7"]
 [editable path="HouseFloors/tile8"]
 [editable path="HouseFloors/tile9"]
-[editable path="HouseWalls/main door"]
-[editable path="HouseWalls/main door2"]
-[editable path="HouseWalls/main door5"]
-[editable path="HouseWalls/main door3"]
-[editable path="HouseWalls/main door4"]
+[editable path="HouseWalls/door1"]
+[editable path="HouseWalls/door2"]
+[editable path="HouseWalls/door3"]
+[editable path="HouseWalls/door4"]
+[editable path="HouseWalls/door5"]
 [editable path="HouseWalls/wall-window-round2"]
 [editable path="HouseWalls/wall-window-round3"]
 [editable path="HouseWalls/main door wall"]

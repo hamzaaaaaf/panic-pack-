@@ -11,7 +11,16 @@ data = PackedVector3Array(0.049999997, 2.1, 0.9, 0.049999997, 2.1, 0, 0.04999999
 [node name="door-rotate-square-a" parent="." index="0" unique_id=1894792230]
 script = ExtResource("2_ew2pm")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="door-rotate-square-a/door" parent_id_path=PackedInt32Array(1612679170) index="1" unique_id=1847119764]
+[node name="door" parent="door-rotate-square-a" index="0" unique_id=1612679170]
+transform = Transform3D(-0.17364807, 0, -0.9848078, 0, 1, 0, 0.9848078, 0, -0.17364807, 0, 0, 0)
+
+[node name="handle" parent="door-rotate-square-a/door" index="0" unique_id=419513517]
+transform = Transform3D(1, 0, 0, 0, 1, 1.1626229e-16, 0, -1.1626229e-16, 1, 0, 0.9, 0.75)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="door-rotate-square-a/door" index="1" unique_id=1847119764]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="door-rotate-square-a/door/StaticBody3D" index="0" unique_id=1270855003]
 shape = SubResource("ConcavePolygonShape3D_2jqnj")
+
+[node name="AnimationPlayer" parent="." index="1" unique_id=790840566]
+unique_name_in_owner = true
