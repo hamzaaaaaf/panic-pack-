@@ -20,6 +20,12 @@ func _unhandled_input(event):
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-89), deg_to_rad(89))
 
 func _physics_process(delta):
+	var main_node = get_node("/root/Main")
+	if main_node and main_node.game_over:
+		velocity = Vector3.ZERO
+		move_and_slide()
+		return
+
 	# Add the gravity if the player is in mid-air
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -59,22 +65,10 @@ func _physics_process(delta):
 					if target.is_in_group("ExitDoor"):
 						var game_manager = get_node("/root/Main")
 						if game_manager and game_manager.taxi_arrived == false:
-							print("The front door is locked tight! Fake pack your items using K first.")
+							print("The front door is locked tight! Find everything on your packing list first.")
 							return # STOP RIGHT HERE so the door remains locked!
 					
-					# Open normal interior room doors or unlocked exits
+					# Open normal interior room doors, unlocked exits, or pick up items
 					target.interact()
-					break 
+					break
 				target = target.get_parent()
-
-	# TEST CHEAT: Completely un-nested so it works independently anywhere!
-	if Input.is_action_just_pressed("interact"):
-		# If you press E into open space, it clears. Let's make K work cleanly on a distinct single tap:
-		pass
-		
-	if Input.is_key_pressed(KEY_K):
-		var main_node = get_node("/root/Main") 
-		if main_node:
-			main_node.collect_item("Test Placeholder Passport")
-			# Micro-delay script so a single frame tap doesn't spawn 50 items
-			await get_tree().create_timer(0.2).timeout 
