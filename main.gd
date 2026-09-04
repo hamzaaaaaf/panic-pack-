@@ -31,7 +31,7 @@ func _ready():
 	var pool = get_tree().get_nodes_in_group("CollectiblePool")
 	pool.shuffle()
 
-	var required_count = min(randi_range(4, 5), pool.size())
+	var required_count = min(randi_range(6, 8), pool.size())
 	for i in range(required_count):
 		var rb = pool[i]
 		required_items.append(rb.name)

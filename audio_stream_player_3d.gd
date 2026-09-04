@@ -15,12 +15,19 @@ var muted_volume: float = -80.0        # -80 dB is functionally absolute silence
 var transition_speed: float = 7.0      # How fast the audio shifts when crossing the doorway
 
 func _ready() -> void:
-	# Add the radio's own static body to the raycast's exception list 
+	# Add the radio's own static body to the raycast's exception list
 	# so it doesn't accidentally collide with itself!
 	var parent_body = _find_first_static_body(get_parent())
 	if parent_body:
 		raycast.add_exception(parent_body)
-	
+
+	# The imported MP3's own loop setting is off (elevator music.mp3.import
+	# has loop=false), and "parameters/looping" on this node doesn't actually
+	# control looping for an AudioStreamMP3 -- that's a property of the
+	# stream resource itself. Force it on here so the track actually loops.
+	if stream is AudioStreamMP3:
+		stream.loop = true
+
 	attenuation_filter_cutoff_hz = clear_cutoff
 	volume_db = base_volume
 

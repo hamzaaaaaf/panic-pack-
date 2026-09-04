@@ -14,17 +14,31 @@ const OBSTACLE_MASS := 6.0
 const ITEM_MASS := 1.2
 const MIN_SHAPE_SIZE := 0.08
 
+# An item only gets shuffled between spawn points if its footprint AND height
+# both stay under these -- picked from the real measured sizes of everything
+# in the house (see the header comment on _shuffle_small_item_positions).
+const SMALL_FOOTPRINT_MAX := 0.55
+const SMALL_HEIGHT_MAX := 0.5
+
 func _ready():
+	randomize()
+
+	var wrapped = []
 	for item in get_children():
 		if item.name == "item_radio":
 			item.set_script(RADIO_SCRIPT)
 			continue
-		_physics_ify(item)
+		var rb = _physics_ify(item)
+		if rb:
+			wrapped.append(rb)
 
-func _physics_ify(item: Node3D):
+	_assign_collectible_pool(wrapped)
+	_shuffle_small_item_positions(wrapped)
+
+func _physics_ify(item: Node3D) -> RigidBody3D:
 	var world_aabb = _compute_world_aabb(item)
 	if world_aabb.size == Vector3.ZERO:
-		return # no mesh found under this item -- leave it alone rather than guess
+		return null # no mesh found under this item -- leave it alone rather than guess
 
 	var origin = item.global_transform.origin
 	var item_basis = item.global_transform.basis
@@ -75,19 +89,77 @@ func _physics_ify(item: Node3D):
 	var is_big_plant = original_name.begins_with("item_big_plant")
 	var is_obstacle = is_chair or is_big_plant
 
+	var footprint = max(size.x, size.z)
+	var is_small = footprint < SMALL_FOOTPRINT_MAX and size.y < SMALL_HEIGHT_MAX
+
 	rb.mass = OBSTACLE_MASS if is_obstacle else ITEM_MASS
 	rb.linear_damp = 0.4
 	rb.angular_damp = 0.6
 	rb.display_name = _format_name(original_name)
 	rb.is_obstacle = is_obstacle
+	rb.is_small = is_small
+	rb.spawn_position = origin
 	rb.add_to_group("Carryable")
-	if not is_obstacle:
-		rb.add_to_group("CollectiblePool")
+
+	return rb
+
+# Items that exist as visually-identical duplicates (item_floor_lamp1,
+# item_floor_lamp2, ...) never go on the packing list -- the player has no
+# way to tell "Floor Lamp 1" apart from "Floor Lamp 2" in the world, so a
+# required item like that would be impossible to fulfil correctly. They're
+# still fully carryable, just never required. Chairs/big plants are excluded
+# the same way they always were.
+func _assign_collectible_pool(wrapped: Array):
+	var counts = {}
+	for rb in wrapped:
+		if rb.is_obstacle:
+			continue
+		var base_key = _strip_trailing_digits(rb.name)
+		counts[base_key] = counts.get(base_key, 0) + 1
+
+	for rb in wrapped:
+		if rb.is_obstacle:
+			continue
+		var base_key = _strip_trailing_digits(rb.name)
+		if counts[base_key] == 1:
+			rb.add_to_group("CollectiblePool")
+
+func _strip_trailing_digits(text: String) -> String:
+	var end = text.length()
+	while end > 0 and text[end - 1].is_valid_int():
+		end -= 1
+	return text.substr(0, end)
 
 func _format_name(raw: String) -> String:
 	var cleaned = raw.trim_prefix("item_").capitalize()
 	cleaned = cleaned.replace("Tv", "TV")
 	return cleaned
+
+# Randomizes layout WITHOUT inventing any new positions: every item you
+# placed in the editor sits somewhere you already checked is valid (on a
+# counter, a floor tile, wherever), so the only safe way to shuffle things is
+# to swap items between each other's authored spots -- never generate a new
+# one. Chairs, big plants, and the radio never move. Bigger non-obstacle
+# items (a TV, a floor lamp, a microwave, ...) also stay put, since a spot
+# picked for a mug on a shelf might not fit a floor lamp; "small" here means
+# both a modest footprint AND a modest height (see the constants above),
+# which was tuned against the real bounding boxes of everything in the house.
+func _shuffle_small_item_positions(wrapped: Array):
+	var small_items = []
+	for rb in wrapped:
+		if not rb.is_obstacle and rb.is_small:
+			small_items.append(rb)
+
+	var positions = []
+	for rb in small_items:
+		positions.append(rb.spawn_position)
+	positions.shuffle()
+
+	for i in range(small_items.size()):
+		var rb = small_items[i]
+		rb.global_transform = Transform3D(Basis.IDENTITY, positions[i])
+		rb.linear_velocity = Vector3.ZERO
+		rb.angular_velocity = Vector3.ZERO
 
 func _compute_world_aabb(node: Node3D) -> AABB:
 	var meshes = []

@@ -3,6 +3,8 @@ extends RigidBody3D
 # Set by items_manager.gd right after this item is wrapped in physics.
 var display_name: String = ""
 var is_obstacle: bool = false
+var is_small: bool = false
+var spawn_position: Vector3 = Vector3.ZERO # the position it was authored at in the editor
 
 func interact():
 	var main_node = get_node_or_null("/root/Main")
