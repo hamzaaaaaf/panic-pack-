@@ -17,7 +17,7 @@ var transition_speed: float = 7.0      # How fast the audio shifts when crossing
 func _ready() -> void:
 	# Add the radio's own static body to the raycast's exception list 
 	# so it doesn't accidentally collide with itself!
-	var parent_body = get_parent().get_node_or_null("StaticBody3D")
+	var parent_body = _find_first_static_body(get_parent())
 	if parent_body:
 		raycast.add_exception(parent_body)
 	
@@ -25,7 +25,7 @@ func _ready() -> void:
 	volume_db = base_volume
 
 func _physics_process(delta: float) -> void:
-	var listener = get_viewport().get_listener_3d()
+	var listener = get_viewport().get_camera_3d()
 	if listener:
 		# Continually point the raycast right at the player's head
 		raycast.target_position = raycast.to_local(listener.global_position)
@@ -41,3 +41,12 @@ func _physics_process(delta: float) -> void:
 		# Smoothly slide the muffle frequency and the volume so it doesn't pop suddenly
 		attenuation_filter_cutoff_hz = lerp(attenuation_filter_cutoff_hz, target_cutoff, transition_speed * delta)
 		volume_db = lerp(volume_db, target_volume, transition_speed * delta)
+
+func _find_first_static_body(node: Node) -> StaticBody3D:
+	if node is StaticBody3D:
+		return node
+	for child in node.get_children():
+		var found = _find_first_static_body(child)
+		if found:
+			return found
+	return null

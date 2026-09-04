@@ -45,6 +45,7 @@
 [ext_resource type="Script" uid="uid://7iqi62iyw5nw" path="res://paper_list.gd" id="21_paper"]
 [ext_resource type="PackedScene" uid="uid://blvoqeuudfto8" path="res://furnitureassets/televisionModern.glb" id="22_0odxb"]
 [ext_resource type="PackedScene" uid="uid://dml08hagmw7yf" path="res://furnitureassets/kitchenCabinetCornerInner.glb" id="22_hrvbo"]
+[ext_resource type="Script" uid="uid://b0wl2mkb4nite" path="res://items_manager.gd" id="22_items_mgr"]
 [ext_resource type="PackedScene" uid="uid://fby6biduerog" path="res://furnitureassets/kitchenCabinetCornerRound.glb" id="23_blkrb"]
 [ext_resource type="PackedScene" uid="uid://dtirha23fg4pa" path="res://furnitureassets/lampRoundFloor.glb" id="23_lswn8"]
 [ext_resource type="PackedScene" uid="uid://ocqgrg1y8qch" path="res://furnitureassets/kitchenStove.glb" id="23_uypp3"]
@@ -1490,24 +1491,6 @@ transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, 5, 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HouseWalls/wall-doorway-wide-round4/wall-doorway-wide-round/StaticBody3D" unique_id=1177127565]
 shape = SubResource("ConcavePolygonShape3D_kek77")
 
-[node name="migh delete this wall1" parent="HouseWalls" unique_id=1322943439 instance=ExtResource("6_kek77")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -3, 0, 1)
-visible = false
-
-[node name="StaticBody3D" type="StaticBody3D" parent="HouseWalls/migh delete this wall1/wall-doorway-wide-round" parent_id_path=PackedInt32Array(1322943439, 620734456) index="0" unique_id=230458084]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="HouseWalls/migh delete this wall1/wall-doorway-wide-round/StaticBody3D" unique_id=459333358]
-shape = SubResource("ConcavePolygonShape3D_kek77")
-
-[node name="migh delete this wall3" parent="HouseWalls" unique_id=1433936835 instance=ExtResource("6_kek77")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, -1)
-visible = false
-
-[node name="StaticBody3D" type="StaticBody3D" parent="HouseWalls/migh delete this wall3/wall-doorway-wide-round" parent_id_path=PackedInt32Array(1433936835, 620734456) index="0" unique_id=530218737]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="HouseWalls/migh delete this wall3/wall-doorway-wide-round/StaticBody3D" unique_id=1675999561]
-shape = SubResource("ConcavePolygonShape3D_kek77")
-
 [node name="wall-doorway-wide-round6" parent="HouseWalls" unique_id=1393882920 instance=ExtResource("6_kek77")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 3, 0, -3)
 
@@ -1522,24 +1505,6 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.4
 [node name="StaticBody3D" type="StaticBody3D" parent="HouseWalls/wall-half1/wall-half" parent_id_path=PackedInt32Array(1851461893, 295625949) index="0" unique_id=269986568]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HouseWalls/wall-half1/wall-half/StaticBody3D" unique_id=1403086436]
-shape = SubResource("ConcavePolygonShape3D_dg77c")
-
-[node name="migh delete this wall2" parent="HouseWalls" unique_id=2120789626 instance=ExtResource("7_4c57u")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2.4977362, 0, -1.0043111)
-visible = false
-
-[node name="StaticBody3D" type="StaticBody3D" parent="HouseWalls/migh delete this wall2/wall-half" parent_id_path=PackedInt32Array(2120789626, 295625949) index="0" unique_id=1601677170]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="HouseWalls/migh delete this wall2/wall-half/StaticBody3D" unique_id=1088529606]
-shape = SubResource("ConcavePolygonShape3D_dg77c")
-
-[node name="migh delete this wall4" parent="HouseWalls" unique_id=1744917870 instance=ExtResource("7_4c57u")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2.5022638, 0, -1.0043111)
-visible = false
-
-[node name="StaticBody3D" type="StaticBody3D" parent="HouseWalls/migh delete this wall4/wall-half" parent_id_path=PackedInt32Array(1744917870, 295625949) index="0" unique_id=1139653275]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="HouseWalls/migh delete this wall4/wall-half/StaticBody3D" unique_id=2056350005]
 shape = SubResource("ConcavePolygonShape3D_dg77c")
 
 [node name="wall-half2" parent="HouseWalls" unique_id=1229936129 instance=ExtResource("7_4c57u")]
@@ -2702,6 +2667,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.43139458)
 shape = SubResource("BoxShape3D_escape")
 
 [node name="Items" type="Node3D" parent="." unique_id=1378569410]
+script = ExtResource("22_items_mgr")
 
 [node name="item_tv" parent="Items" unique_id=2070577192 instance=ExtResource("22_0odxb")]
 transform = Transform3D(-2.5, 0, 2.1855695e-07, 0, 2.5, 0, -2.1855695e-07, 0, -2.5, -4.9900513, 0.8749999, 2.6751342)
@@ -3120,6 +3086,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, -0.263)
 [node name="RayCast3D" type="RayCast3D" parent="Player/Camera3D" unique_id=1595479557]
 target_position = Vector3(0, 0, -3)
 
+[node name="CarryPoint" type="Marker3D" parent="Player/Camera3D" unique_id=219736344]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, -1.3)
+
 [node name="Root Scene" parent="Player" unique_id=450358301 instance=ExtResource("2_0xm2m")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, -1, 0)
 
@@ -3201,10 +3170,12 @@ transform = Transform3D(0.99323684, 0.00803533, -0.11560086, 0.114972785, 0.0560
 [node name="PT_R" parent="Player/Root Scene/RootNode/CharacterArmature/Skeleton3D" index="16" unique_id=2086582501]
 transform = Transform3D(1, -1.2749048e-09, -6.794929e-05, -6.7948306e-05, 0.0053473976, -0.99998564, 3.646268e-07, 0.99998564, 0.0053473976, -0.00018165624, -0.007312292, 0.004232642)
 
+[node name="FootstepPlayer" type="AudioStreamPlayer" parent="Player" unique_id=254262959]
+volume_db = -6.0
+
 [node name="FlightTimer" type="Timer" parent="." unique_id=2077387377]
-wait_time = 120.0
+wait_time = 240.0
 one_shot = true
-autostart = true
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=731430340]
 
@@ -3215,6 +3186,49 @@ offset_right = 520.0
 offset_bottom = 70.0
 theme_override_font_sizes/font_size = 36
 text = "02:00"
+
+[node name="PackedCountLabel" type="Label" parent="UI" unique_id=314354500]
+offset_left = 20.0
+offset_top = 76.0
+offset_right = 520.0
+offset_bottom = 116.0
+theme_override_font_sizes/font_size = 28
+text = "Packed: 0 / 0"
+
+[node name="Crosshair" type="Label" parent="UI" unique_id=66423116]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -12.0
+offset_right = 10.0
+offset_bottom = 12.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.85)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.6)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 22
+text = "+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InteractPrompt" type="Label" parent="UI" unique_id=995089025]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = 22.0
+offset_right = 220.0
+offset_bottom = 54.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.7)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1
 
 [node name="TabHint" type="Label" parent="UI" unique_id=1230263352]
 modulate = Color(1, 1, 1, 0.75)
@@ -3252,6 +3266,102 @@ offset_left = 24.0
 offset_top = 58.0
 offset_right = 340.0
 offset_bottom = 460.0
+
+[node name="StartScreen" type="Control" parent="UI" unique_id=916001030]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Dim" type="ColorRect" parent="UI/StartScreen" unique_id=135944029]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.75)
+
+[node name="VBox" type="VBoxContainer" parent="UI/StartScreen" unique_id=1663678591]
+layout_mode = 0
+offset_left = 560.0
+offset_top = 320.0
+offset_right = 1360.0
+offset_bottom = 760.0
+theme_override_constants/separation = 18
+
+[node name="Title" type="Label" parent="UI/StartScreen/VBox" unique_id=243504972]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.95, 0.8, 0.25, 1)
+theme_override_font_sizes/font_size = 56
+text = "PANIC PACK!"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="UI/StartScreen/VBox" unique_id=289061060]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "Your taxi is coming. Grab everything on your packing list before it arrives -- then get out the front door."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Instructions" type="Label" parent="UI/StartScreen/VBox" unique_id=716113608]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_font_sizes/font_size = 18
+text = "WASD move   |   Mouse look   |   E interact / pick up / drop   |   TAB packing list"
+horizontal_alignment = 1
+
+[node name="StartButton" type="Button" parent="UI/StartScreen/VBox" unique_id=974864877]
+custom_minimum_size = Vector2(260, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 26
+text = "Start Packing"
+
+[node name="EndScreen" type="Control" parent="UI" unique_id=1880214533]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Dim" type="ColorRect" parent="UI/EndScreen" unique_id=2009086344]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.8)
+
+[node name="VBox" type="VBoxContainer" parent="UI/EndScreen" unique_id=1307241556]
+layout_mode = 0
+offset_left = 560.0
+offset_top = 380.0
+offset_right = 1360.0
+offset_bottom = 700.0
+theme_override_constants/separation = 18
+
+[node name="ResultLabel" type="Label" parent="UI/EndScreen/VBox" unique_id=1135830465]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 48
+text = "GAME OVER"
+horizontal_alignment = 1
+
+[node name="SummaryLabel" type="Label" parent="UI/EndScreen/VBox" unique_id=712237396]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="RestartButton" type="Button" parent="UI/EndScreen/VBox" unique_id=193038015]
+custom_minimum_size = Vector2(260, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 26
+text = "Play Again"
 
 [editable path="FixedFurniture/bedsidetable1"]
 [editable path="FixedFurniture/singlebed1"]
@@ -3368,12 +3478,8 @@ offset_bottom = 460.0
 [editable path="HouseWalls/wall36"]
 [editable path="HouseWalls/wall-doorway-wide-round2"]
 [editable path="HouseWalls/wall-doorway-wide-round4"]
-[editable path="HouseWalls/migh delete this wall1"]
-[editable path="HouseWalls/migh delete this wall3"]
 [editable path="HouseWalls/wall-doorway-wide-round6"]
 [editable path="HouseWalls/wall-half1"]
-[editable path="HouseWalls/migh delete this wall2"]
-[editable path="HouseWalls/migh delete this wall4"]
 [editable path="HouseWalls/wall-half2"]
 [editable path="HouseWalls/wall-window-wide-round-detailed2"]
 [editable path="HouseWalls/wall-window-wide-round-detailed6"]
